@@ -2,7 +2,7 @@ name: Daily Repository Update
 
 on:
   schedule:
-    - cron: '20 10 * * *'
+    - cron: '25 10 * * *'
   workflow_dispatch:
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: 22f3001317@ds.study.iitm.ac.in - Update Timestamp
         run: |
@@ -28,4 +28,5 @@ jobs:
           git config user.email "22f3001317@ds.study.iitm.ac.in"
           git add daily-log.txt
           git commit -m "Automated daily commit - $(date)" || echo "No changes to commit"
-          git push
+          git pull origin main --rebase
+          git push origin main
